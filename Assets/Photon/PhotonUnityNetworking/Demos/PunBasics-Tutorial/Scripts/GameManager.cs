@@ -41,7 +41,7 @@ namespace Photon.Pun.Demo.PunBasics
         private GameObject playerPrefab;
 
 		[SerializeField]
-		private Transform[] spawnerList = new Transform[10];
+		public Transform[] spawnerList = new Transform[10];
 
         #endregion
 
