@@ -17,12 +17,16 @@ public class Vida : MonoBehaviourPunCallbacks
     [SerializeField]
     TMP_Text textMeshDescription;
 
+    [SerializeField]
+    int life = 2;
+    int currentLife;
+
     bool aguardandoParaNascer = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentLife = life;
     }
 
     void FixedUpdate()
@@ -41,15 +45,13 @@ public class Vida : MonoBehaviourPunCallbacks
         StartCoroutine(AguardarParaReviver());
     }
 
-    public IEnumerator AguardarParaReviver(float countdownValue = 5)
+    [PunRPC]
+    public IEnumerator AguardarParaReviver(float countdownValue = 10)
     {
         aguardandoParaNascer = true;
-        int p = Random.Range(0, 10);
 
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
         transform.Find("Vehicle").gameObject.SetActive(false);
-        gameObject.transform.position = GameManager.Instance.spawnerList[p].position;
-        gameObject.transform.rotation = GameManager.Instance.spawnerList[p].rotation;
 
         textMeshTitle.gameObject.SetActive(true);
         textMeshDescription.gameObject.SetActive(true);
@@ -57,6 +59,7 @@ public class Vida : MonoBehaviourPunCallbacks
         
         while (countdownValue > 0)
         {
+            gameObject.transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 90f, transform.rotation.w);
             textMeshDescription.SetText(countdownValue.ToString());
             yield return new WaitForSeconds(1.0f);
             countdownValue--;
@@ -65,10 +68,38 @@ public class Vida : MonoBehaviourPunCallbacks
         textMeshTitle.gameObject.SetActive(false);
         textMeshDescription.gameObject.SetActive(false);
 
+        int p = Random.Range(0, 10);
+        gameObject.transform.position = GameManager.Instance.spawnerList[10].position;
+        gameObject.transform.rotation = GameManager.Instance.spawnerList[10].rotation;
         gameObject.GetComponent<Rigidbody>().isKinematic = false;
         transform.Find("Vehicle").gameObject.SetActive(true);
         aguardandoParaNascer = false;
+        
 
+    }
+
+    private void OnCollisionEnter(Collision col)
+    {
+        if (photonView.IsMine && !aguardandoParaNascer)
+        {
+            if (col.gameObject.tag == "Bomba")
+            {
+                currentLife -= 2;
+                Debug.Log("Bomba Life " + currentLife);
+            }
+
+            if (col.gameObject.tag == "Missil")
+            {
+                currentLife -= 5;
+                Debug.Log("Missil Life " + currentLife);
+            }
+        }
+
+        if (currentLife <= 0)
+        {
+            morrer();
+            currentLife = life;
+        }
     }
 
 }

@@ -62,6 +62,8 @@ public class Player : MonoBehaviourPunCallbacks
         {
             GerarItem();
         }
+
+        
     }
 
     void GerarItem()

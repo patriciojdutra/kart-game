@@ -1007,6 +1007,36 @@ MonoBehaviour:
   ReverseSoundMaxVolume: 0.5
   ReverseSoundMaxPitch: 0.6
   arcadeKart: {fileID: 8871433425856412109}
+--- !u!1 &6189218012281377105 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7798798856362183834, guid: 19954de30401f73428254541a9ad156e,
+    type: 3}
+  m_PrefabInstance: {fileID: 4169878885913845195}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &995759490944773772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6189218012281377105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 1
+    Name: Steering
+  - Type: 4
+    SynchronizeType: 0
+    Name: Grounded
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &8871433425856412104 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4810912518991602691, guid: 19954de30401f73428254541a9ad156e,
@@ -1048,22 +1078,6 @@ MonoBehaviour:
   itemList:
   - {fileID: 3200733791496775596, guid: e3dbc4a9ed5b54696aec675778626c28, type: 3}
   - {fileID: 5882981835202437406, guid: 97bc7e618e16c4e6fbea4b70033a6ded, type: 3}
---- !u!114 &1337373819639397496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8871433425856412104}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
 --- !u!114 &3382810530178011524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1099,8 +1113,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 1337373819639397496}
   - {fileID: 3382810530178011524}
+  - {fileID: 995759490944773772}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1118,6 +1132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textMeshTitle: {fileID: 3018798960315752545}
   textMeshDescription: {fileID: 5784925929656653399}
+  life: 5
 --- !u!114 &8871433425856412109 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4810912518991602694, guid: 19954de30401f73428254541a9ad156e,
