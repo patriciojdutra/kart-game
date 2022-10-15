@@ -7,10 +7,11 @@ public class Item : MonoBehaviourPun
     public GameObject bala;
     public float speedBala = 5;
     public float duracao = 5;
+    private int multi = 50;
 
     private void Start()
     {
-        Destroy();
+        Destroy(duracao, multi);
     }
 
     void FixedUpdate()
@@ -20,9 +21,15 @@ public class Item : MonoBehaviourPun
 
 
     [PunRPC]
-    public void Destroy()
+    public void Destroy(float duration = 0, int x = 0)
     {
         GetComponent<AudioSource>().Play();
-        Destroy(gameObject, (duracao * 50) * Time.deltaTime);
+        Destroy(gameObject, (duration * x) * Time.deltaTime);
     }
+
+    private void OnCollisionEnter(Collision col)
+    {
+        Destroy();
+    }
+
 }

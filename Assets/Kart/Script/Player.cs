@@ -49,9 +49,10 @@ public class Player : MonoBehaviourPunCallbacks
             GameObject bala = itemList[itemSelecionado].bala;
             Quaternion rotacaoBala = miraFrente.transform.rotation;
             Vector3 posicaoBala = miraFrente.transform.position;
-
             PhotonNetwork.Instantiate(bala.name, posicaoBala, rotacaoBala);
+
             imageCaixa.enabled = false;
+            itemSelecionado = -1;
         }
     }
 
