@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using Photon.Pun.Demo.PunBasics;
+using Photon.Realtime;
+using Photon.Pun;
 using UnityEngine;
 
 public class CaixaDeItens : MonoBehaviour
@@ -10,13 +10,6 @@ public class CaixaDeItens : MonoBehaviour
     public float tempoDeEspera = 5;
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     { 
         gameObject.transform.Rotate(new Vector3(0, giro * Time.deltaTime, giro * Time.deltaTime));
@@ -42,6 +35,7 @@ public class CaixaDeItens : MonoBehaviour
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<BoxCollider>().enabled = false;
         GetComponent<AudioSource>().Play();
+        Debug.Log(PhotonNetwork.LocalPlayer.NickName + " play som ");
 
         while (countdownValue > 0)
         {

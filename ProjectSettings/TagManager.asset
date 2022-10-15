@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Item
   - CaixaDeItens
+  - Bomba
+  - Missil
   layers:
   - Default
   - TransparentFX

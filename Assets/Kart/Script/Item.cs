@@ -1,6 +1,7 @@
+using Photon.Pun;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class Item : MonoBehaviourPun
 {
     public Sprite image;
     public GameObject bala;
@@ -9,12 +10,19 @@ public class Item : MonoBehaviour
 
     private void Start()
     {
-        GetComponent<AudioSource>().Play();
-        Destroy(gameObject, (duracao * 50) * Time.deltaTime);
+        Destroy();
     }
 
     void FixedUpdate()
     {
         gameObject.transform.Translate(new Vector3(0, 0, (speedBala * 50) * Time.deltaTime));
+    }
+
+
+    [PunRPC]
+    public void Destroy()
+    {
+        GetComponent<AudioSource>().Play();
+        Destroy(gameObject, (duracao * 50) * Time.deltaTime);
     }
 }

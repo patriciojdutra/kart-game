@@ -2,57 +2,74 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 using Random = UnityEngine.Random;
 
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviourPunCallbacks
 {
     public Image imageCaixa;
+    public GameObject miraFrente;
+    public GameObject miraTras;
     public Item[] itemList = new Item[3];
     int itemSelecionado = -1;
 
-    private void Start()
+    void Awake()
     {
-        imageCaixa.enabled = false;
+        if (photonView.IsMine)
+        {
+            if (imageCaixa == null)
+                imageCaixa = GetComponent<Image>();
+
+            if (miraFrente == null)
+                miraFrente = transform.Find("MiraFrente").gameObject;
+
+            if (miraTras == null)
+                miraTras = transform.Find("MiraTras").gameObject;
+        } 
+    }
+
+    void Start()
+    {     
+        imageCaixa.enabled = false;      
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            atirar();
+            Atirar();
         }
-      
     }
 
-    void atirar()
+    void Atirar()
     {
-        if(itemSelecionado > -1)
+        if(itemSelecionado > -1 && photonView.IsMine)
         {
             GameObject bala = itemList[itemSelecionado].bala;
-            Quaternion rotacaoBala = gameObject.transform.rotation;
-            Vector3 posicaoBala = gameObject.transform.position;
-            posicaoBala.z += 1.5f;
+            Quaternion rotacaoBala = miraFrente.transform.rotation;
+            Vector3 posicaoBala = miraFrente.transform.position;
 
-            Instantiate(bala, posicaoBala, rotacaoBala);
+            PhotonNetwork.Instantiate(bala.name, posicaoBala, rotacaoBala);
             imageCaixa.enabled = false;
-            itemSelecionado = -1;
         }
     }
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "CaixaDeItens")
+        if (col.gameObject.tag == "CaixaDeItens" && photonView.IsMine)
         {
-            gerarItem();
+            GerarItem();
         }
     }
 
-    void gerarItem()
+    void GerarItem()
     {
-        itemSelecionado = Random.Range(0, itemList.Length);
-        imageCaixa.sprite = itemList[itemSelecionado].image;
-        imageCaixa.enabled = true;
+        if (photonView.IsMine)
+        {
+            itemSelecionado = Random.Range(0, itemList.Length);
+            imageCaixa.sprite = itemList[itemSelecionado].image;
+            imageCaixa.enabled = true;
+        }
     }
-
 }
