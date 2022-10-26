@@ -9,167 +9,223 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 using Photon.Realtime;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
+using ExitGames.Client.Photon;
+using TMPro;
+using UnityEngine.UI;
 
-namespace Photon.Pun.Demo.PunBasics
+
+public class GameManager : MonoBehaviourPunCallbacks
 {
-	#pragma warning disable 649
 
-	/// <summary>
-	/// Game manager.
-	/// Connects and watch Photon Status, Instantiate Player
-	/// Deals with quiting the room and the game
-	/// Deals with level loading (outside the in room synchronization)
-	/// </summary>
-	public class GameManager : MonoBehaviourPunCallbacks
+    [Header("Login Panel")]
+    public GameObject MainPanel;
+    public InputField PlayerNameInput;
+
+    [Tooltip("The prefab to use for representing the player")]
+    [SerializeField]
+    private GameObject playerPrefab;
+
+    [SerializeField]
+    public Transform[] spawnerList = new Transform[10];
+
+    [SerializeField]
+    TMP_Text textTempo;
+
+    [SerializeField]
+    private float tempoDoJogo;
+    private float tempoAtual;
+
+    byte gameCode = 2;
+    byte endGameCode = 3;
+    byte timeCode = 4;
+    bool startGame = false;
+    bool endGame = false;
+    bool jogoEstaRodando = false;
+
+    #region MonoBehaviour CallBacks
+
+    public void Awake()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+        Debug.Log("AWAKE");
+    }
+
+    void Start()
+    {
+        Debug.Log("Start");
+    }
+
+    void Update()
+    {
+        if (jogoEstaRodando)
+        {
+            Temporizador();
+        }
+    }
+
+    void Temporizador()
     {
 
-		#region Public Fields
+        if (tempoAtual > 0)
+            tempoAtual -= Time.deltaTime;
+        else
+        {
+            tempoAtual = 0;
+            EndGame();
+        }
 
-		static public GameManager Instance;
+        float minutos = Mathf.FloorToInt(tempoAtual / 60);
+        float segundos = Mathf.FloorToInt(tempoAtual % 60);
+        textTempo.text = string.Format("{0:00} : {1:00}", minutos, segundos);
+    }
 
-		#endregion
+    void StartGame()
+    {
+        tempoAtual = tempoDoJogo;
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        PhotonNetwork.RaiseEvent(gameCode, true, raiseEventOptions, SendOptions.SendReliable);
+    }
 
-		#region Private Fields
+    void EndGame()
+    {
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        PhotonNetwork.RaiseEvent(gameCode, false, raiseEventOptions, SendOptions.SendReliable);
+    }
 
-		private GameObject instance;
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+    }
 
-        [Tooltip("The prefab to use for representing the player")]
-        [SerializeField]
-        private GameObject playerPrefab;
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+    }
 
-		[SerializeField]
-		public Transform[] spawnerList = new Transform[10];
+    private void OnEvent(EventData photonEvent)
+    {
+        byte eventCode = photonEvent.Code;
+        if (eventCode == gameCode)
+        {
+            jogoEstaRodando = (bool)photonEvent.CustomData;
 
-        #endregion
+            if (jogoEstaRodando == false)
+                showResult();
 
-        #region MonoBehaviour CallBacks
+        }
+        else if (eventCode == timeCode)
+        {
+            tempoAtual = (float)photonEvent.CustomData;
 
-        /// <summary>
-        /// MonoBehaviour method called on GameObject by Unity during initialization phase.
-        /// </summary>
-        void Start()
-		{
-			Instance = this;
+            if (tempoAtual < tempoDoJogo && tempoAtual > 0)
+            {
+                jogoEstaRodando = true;
+            }
+        }
+    }
 
-			// in case we started this demo with the wrong scene being active, simply load the menu scene
-			if (!PhotonNetwork.IsConnected)
-			{
-				//SceneManager.LoadScene("PunBasics-Launcher");
+    void showResult()
+    {
+        Player playerVencedor = PhotonNetwork.LocalPlayer;
+        double score = ScoreExtensions.GetScore(playerVencedor);
 
-				return;
-			}
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            double scorePlayer = ScoreExtensions.GetScore(player);
 
-			if (playerPrefab == null) { // #Tip Never assume public properties of Components are filled up properly, always check and inform the developer of it.
+            if (scorePlayer > score)
+            {
+                playerVencedor = player;
+                score = scorePlayer;
+            }
+        }
 
-				Debug.LogError("<Color=Red><b>Missing</b></Color> playerPrefab Reference. Please set it up in GameObject 'Game Manager'", this);
-			} else {
+        textTempo.text = playerVencedor.NickName + " foi o vencedor";
+    }
 
+    #endregion
 
-				if (PlayerManager.LocalPlayerInstance==null)
-				{
-				    Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
+    public void OnLoginButtonClicked()
+    {
+        Debug.Log("Botao clicado");
+        string playerName = PlayerNameInput.text != ""
+            ? PlayerNameInput.text
+            : "Player " + Random.Range(1000, 10000);
 
-					var playerCount = PhotonNetwork.CountOfPlayersInRooms;
-                    PhotonNetwork.Instantiate(this.playerPrefab.name, spawnerList[playerCount].position, spawnerList[playerCount].rotation, 0);
-                }
-                else
-                {
-					Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
-				}
-			}
-		}
+        PhotonNetwork.LocalPlayer.NickName = playerName;
+        PhotonNetwork.ConnectUsingSettings();
+    }
 
-		/// <summary>
-		/// MonoBehaviour method called on GameObject by Unity on every frame.
-		/// </summary>
-		void Update()
-		{
-			// "back" button of phone equals "Escape". quit app if that's pressed
-			if (Input.GetKeyDown(KeyCode.Escape))
-			{
-				QuitApplication();
-			}
-		}
+    #region PUN CALLBACKS
 
-        #endregion
+    public override void OnConnectedToMaster()
+    {
 
-        #region Photon Callbacks
+        Debug.Log("conectado ao server");
+        if (!PhotonNetwork.InLobby)
+        {
+            PhotonNetwork.JoinLobby();
+        }
 
-        /// <summary>
-        /// Called when a Photon Player got connected. We need to then load a bigger scene.
-        /// </summary>
-        /// <param name="other">Other.</param>
-        public override void OnPlayerEnteredRoom( Player other  )
-		{
-			Debug.Log( "OnPlayerEnteredRoom() " + other.NickName); // not seen if you're the player connecting
+    }
 
-			if ( PhotonNetwork.IsMasterClient )
-			{
-				Debug.LogFormat( "OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient ); // called before OnPlayerLeftRoom
+    public override void OnJoinedLobby()
+    {
+        Debug.Log("Entrou no Lobby");
+        PhotonNetwork.JoinRoom("Afya");
+    }
 
-				LoadArena();
-			}
-		}
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
 
-		/// <summary>
-		/// Called when a Photon Player got disconnected. We need to load a smaller scene.
-		/// </summary>
-		/// <param name="other">Other.</param>
-		public override void OnPlayerLeftRoom( Player other  )
-		{
-			Debug.Log( "OnPlayerLeftRoom() " + other.NickName ); // seen when other disconnects
+        Debug.Log("errou");
+        if (returnCode == ErrorCode.GameDoesNotExist)
+        {
+            RoomOptions sala = new RoomOptions { MaxPlayers = 20 };
+            PhotonNetwork.CreateRoom("Afya", sala, null);
+            Debug.Log("Criando sala");
+        }
+    }
 
-			if ( PhotonNetwork.IsMasterClient )
-			{
-				Debug.LogFormat( "OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient ); // called before OnPlayerLeftRoom
+    public override void OnJoinedRoom()
+    {
+        Debug.Log("Iniciando o jogo");
+        if (PhotonNetwork.IsConnected)
+        {
+            var playerCount = PhotonNetwork.CountOfPlayersInRooms;
+            PhotonNetwork.Instantiate(playerPrefab.name, spawnerList[playerCount].position, spawnerList[playerCount].rotation, 0);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StartGame();
+            }
 
-				LoadArena(); 
-			}
-		}
+            MainPanel.SetActive(false);
+        }
 
-		/// <summary>
-		/// Called when the local player left the room. We need to load the launcher scene.
-		/// </summary>
-		public override void OnLeftRoom()
-		{
-			SceneManager.LoadScene("PunBasics-Launcher");
-		}
+        //PhotonNetwork.LoadLevel("Game");
+    }
 
-		#endregion
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Debug.Log(newPlayer.NickName + " entrou");
 
-		#region Public Methods
+        if (PhotonNetwork.IsMasterClient)
+        {
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+            PhotonNetwork.RaiseEvent(timeCode, tempoAtual, raiseEventOptions, SendOptions.SendReliable);
+        }
+    }
 
-		public bool LeaveRoom()
-		{
-			return PhotonNetwork.LeaveRoom();
-		}
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        Debug.Log("erxxxc");
+    }
 
-		public void QuitApplication()
-		{
-			Application.Quit();
-		}
-
-		#endregion
-
-		#region Private Methods
-
-		void LoadArena()
-		{
-			if ( ! PhotonNetwork.IsMasterClient )
-			{
-				Debug.LogError( "PhotonNetwork : Trying to Load a level but we are not the master Client" );
-			}
-
-			Debug.LogFormat( "PhotonNetwork : Loading Level : {0}", PhotonNetwork.CurrentRoom.PlayerCount );
-
-			PhotonNetwork.LoadLevel("PunBasics-Room for "+PhotonNetwork.CurrentRoom.PlayerCount);
-		}
-
-		#endregion
-
-	}
-
+    #endregion
 }

@@ -48,9 +48,7 @@ namespace Photon.Pun.Demo.Asteroids
             PhotonNetwork.AutomaticallySyncScene = true;
 
             cachedRoomList = new Dictionary<string, RoomInfo>();
-            roomListEntries = new Dictionary<string, GameObject>();
-            
-            //PlayerNameInput.text = "Player " + Random.Range(1000, 10000);
+            roomListEntries = new Dictionary<string, GameObject>();         
         }
 
         #endregion
@@ -59,7 +57,13 @@ namespace Photon.Pun.Demo.Asteroids
 
         public override void OnConnectedToMaster()
         {
-            this.SetActivePanel(SelectionPanel.name);
+            //this.SetActivePanel(SelectionPanel.name);
+
+            if (!PhotonNetwork.InLobby)
+            {
+                PhotonNetwork.JoinLobby();
+            }
+
         }
 
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -73,8 +77,12 @@ namespace Photon.Pun.Demo.Asteroids
         public override void OnJoinedLobby()
         {
             // whenever this joins a new lobby, clear any previous room lists
-            cachedRoomList.Clear();
-            ClearRoomListView();
+            //cachedRoomList.Clear();
+            //ClearRoomListView();
+
+            PhotonNetwork.JoinRoom("Afya");
+
+
         }
 
         // note: when a client joins / creates a room, OnLeftLobby does not get called, even if the client was in a lobby before
@@ -91,7 +99,14 @@ namespace Photon.Pun.Demo.Asteroids
 
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
-            SetActivePanel(SelectionPanel.name);
+            //SetActivePanel(SelectionPanel.name);
+
+            if(returnCode == ErrorCode.GameDoesNotExist)
+            {
+                RoomOptions sala = new RoomOptions { MaxPlayers = 20 };
+                PhotonNetwork.CreateRoom("Afya", sala, null);
+            }
+
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message)
@@ -105,40 +120,44 @@ namespace Photon.Pun.Demo.Asteroids
 
         public override void OnJoinedRoom()
         {
+
+            PhotonNetwork.LoadLevel("Game");
+
+
             // joining (or entering) a room invalidates any cached lobby room list (even if LeaveLobby was not called due to just joining a room)
-            cachedRoomList.Clear();
+            //cachedRoomList.Clear();
 
 
-            SetActivePanel(InsideRoomPanel.name);
+            //SetActivePanel(InsideRoomPanel.name);
 
-            if (playerListEntries == null)
-            {
-                playerListEntries = new Dictionary<int, GameObject>();
-            }
+            //if (playerListEntries == null)
+            //{
+            //    playerListEntries = new Dictionary<int, GameObject>();
+            //}
 
-            foreach (Player p in PhotonNetwork.PlayerList)
-            {
-                GameObject entry = Instantiate(PlayerListEntryPrefab);
-                entry.transform.SetParent(InsideRoomPanel.transform);
-                entry.transform.localScale = Vector3.one;
-                entry.GetComponent<PlayerListEntry>().Initialize(p.ActorNumber, p.NickName);
+            //foreach (Player p in PhotonNetwork.PlayerList)
+            //{
+            //    GameObject entry = Instantiate(PlayerListEntryPrefab);
+            //    entry.transform.SetParent(InsideRoomPanel.transform);
+            //    entry.transform.localScale = Vector3.one;
+            //    entry.GetComponent<PlayerListEntry>().Initialize(p.ActorNumber, p.NickName);
 
-                object isPlayerReady;
-                if (p.CustomProperties.TryGetValue(AsteroidsGame.PLAYER_READY, out isPlayerReady))
-                {
-                    entry.GetComponent<PlayerListEntry>().SetPlayerReady((bool) isPlayerReady);
-                }
+            //    object isPlayerReady;
+            //    if (p.CustomProperties.TryGetValue(AsteroidsGame.PLAYER_READY, out isPlayerReady))
+            //    {
+            //        entry.GetComponent<PlayerListEntry>().SetPlayerReady((bool) isPlayerReady);
+            //    }
 
-                playerListEntries.Add(p.ActorNumber, entry);
-            }
+            //    playerListEntries.Add(p.ActorNumber, entry);
+            //}
 
-            StartGameButton.gameObject.SetActive(CheckPlayersReady());
+            //StartGameButton.gameObject.SetActive(CheckPlayersReady());
 
-            Hashtable props = new Hashtable
-            {
-                {AsteroidsGame.PLAYER_LOADED_LEVEL, false}
-            };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            //Hashtable props = new Hashtable
+            //{
+            //    {AsteroidsGame.PLAYER_LOADED_LEVEL, false}
+            //};
+            //PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
 
         public override void OnLeftRoom()
@@ -249,8 +268,7 @@ namespace Photon.Pun.Demo.Asteroids
                 : "Player " + Random.Range(1000, 10000);
 
             PhotonNetwork.LocalPlayer.NickName = playerName;
-            PhotonNetwork.ConnectUsingSettings();
-              
+            PhotonNetwork.ConnectUsingSettings();         
         }
 
         public void OnRoomListButtonClicked()
@@ -265,8 +283,8 @@ namespace Photon.Pun.Demo.Asteroids
 
         public void OnStartGameButtonClicked()
         {
-            PhotonNetwork.CurrentRoom.IsOpen = false;
-            PhotonNetwork.CurrentRoom.IsVisible = false;
+            //PhotonNetwork.CurrentRoom.IsOpen = false;
+            //PhotonNetwork.CurrentRoom.IsVisible = false;
 
             PhotonNetwork.LoadLevel("Game");
         }

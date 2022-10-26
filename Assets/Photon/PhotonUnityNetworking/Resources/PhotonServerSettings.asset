@@ -42,6 +42,10 @@ MonoBehaviour:
   - ShootFireball
   - Destroy
   - AguardarParaReviver
+  - SetPlayerKill
+  - OnJoinedRoom
+  - CreateText
+  - ChangeNumberKill
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

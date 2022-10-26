@@ -6,7 +6,7 @@
 	<dict>
 		<key>Resources/Data/Managed/Assembly-CSharp.dll</key>
 		<data>
-		RWiQOOKenKAAFdR56Nv05nYyb2s=
+		5OVAoOMowd481lJAeK0yF0PjW38=
 		</data>
 		<key>Resources/Data/Managed/Cinemachine.dll</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Resources/Data/Managed/PhotonUnityNetworking.Demos.dll</key>
 		<data>
-		EyvSsuS65cVA7uCjKIajvRTKcIw=
+		nn4sLECk0ohhR/i45ZeCEvjTVtE=
 		</data>
 		<key>Resources/Data/Managed/PhotonUnityNetworking.Utilities.dll</key>
 		<data>
@@ -630,11 +630,11 @@
 		</data>
 		<key>Resources/Data/globalgamemanagers</key>
 		<data>
-		wzzhA07jLsGw0TzrmtPGwNCvP6E=
+		CalPwcoILVFcI2tq7vhMGsK88cg=
 		</data>
 		<key>Resources/Data/globalgamemanagers.assets</key>
 		<data>
-		Ghu81I/+86wBzKuQWIPRWa8523M=
+		o8ANTQs/dNGVXJEt0TUYx2qNHFg=
 		</data>
 		<key>Resources/Data/globalgamemanagers.assets.resS</key>
 		<data>
@@ -642,7 +642,7 @@
 		</data>
 		<key>Resources/Data/level0</key>
 		<data>
-		LSMi5vfCYbPZim1Za/QfvGtD6Is=
+		kJ4/bdmFCKAWTTI8B3Iz14PSyF0=
 		</data>
 		<key>Resources/Data/level0.resS</key>
 		<data>
@@ -650,23 +650,15 @@
 		</data>
 		<key>Resources/Data/level1</key>
 		<data>
-		/UL4Kfdefetc7MyrP/+u0RsMhY8=
+		HrEpfwthtmGYzKQluTBjoZ3396M=
 		</data>
 		<key>Resources/Data/level1.resS</key>
 		<data>
 		vuHx2kZSm7P5Tz8593Sea6NOlPs=
 		</data>
-		<key>Resources/Data/level2</key>
-		<data>
-		MEccyMcN5Uk7aI8k17B2tVCKg7k=
-		</data>
-		<key>Resources/Data/level2.resS</key>
-		<data>
-		vuHx2kZSm7P5Tz8593Sea6NOlPs=
-		</data>
 		<key>Resources/Data/resources.assets</key>
 		<data>
-		wDayzaCuFLfxEyMJH55LlmRXch8=
+		xC5JtfgdhPhsbqMHICovU6OvwJw=
 		</data>
 		<key>Resources/Data/resources.assets.resS</key>
 		<data>
@@ -678,7 +670,7 @@
 		</data>
 		<key>Resources/Data/sharedassets0.assets</key>
 		<data>
-		DCSvadt/20T8iVOyqvQC1TAyXwc=
+		BH16dDNzPnPNwLoRxsiKJu0jg3Q=
 		</data>
 		<key>Resources/Data/sharedassets0.assets.resS</key>
 		<data>
@@ -686,7 +678,7 @@
 		</data>
 		<key>Resources/Data/sharedassets1.assets</key>
 		<data>
-		9EnIw0EI3Dz1kKAbYRr9Wa7eiu4=
+		FLBvMhnrAN7oPKjg5uXfOXFeWs8=
 		</data>
 		<key>Resources/Data/sharedassets1.assets.resS</key>
 		<data>
@@ -696,21 +688,9 @@
 		<data>
 		BLhcP6TVte/+qAeKDUuv+KnFhCs=
 		</data>
-		<key>Resources/Data/sharedassets2.assets</key>
-		<data>
-		yQ7Y4eBLlLw0d7yc04R4UQVV1t8=
-		</data>
-		<key>Resources/Data/sharedassets2.assets.resS</key>
-		<data>
-		xRubRDaphbj4ZykfJ46rQzt4FBA=
-		</data>
-		<key>Resources/Data/sharedassets2.resource</key>
-		<data>
-		AgB7B6kxnigl/IVHy7lKiFeG/Mo=
-		</data>
 		<key>Resources/DefaultPreferences.plist</key>
 		<data>
-		328gBco4OE4lwDcEUI4+p+dVOLg=
+		VNbnYUGjCc5cH+QpbqXpbK3KbT8=
 		</data>
 		<key>Resources/MainMenu.nib/designable.nib</key>
 		<data>
@@ -893,10 +873,10 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			5EIxI8BkQkDWeWXD6b/cYghXMN4=
+			rf8pR/KsmkPAmd71MEDaqmOaggk=
 			</data>
 			<key>requirement</key>
-			<string>cdhash H"e4423123c0644240d67965c3e9bfdc62085730de" or cdhash H"62cf444c3f6c7fc15b6e9ef7aebcbdf346808e0b"</string>
+			<string>cdhash H"adff2947f2ac9a43c099def53040daaa639a8209" or cdhash H"cb87a65cfb09e2ce944ea521d2277dae04bfafc7"</string>
 		</dict>
 		<key>PlugIns/libgrpc_csharp_ext.x64.bundle</key>
 		<dict>
@@ -911,7 +891,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			6GrhK69QmbMZKQy/H6ZD+VsduVaUuvMbrhxt6GSWumg=
+			cuW18/eOu4XraPxe14r4cP4rs5ypXABlpzN3KpJLO4E=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Cinemachine.dll</key>
@@ -988,7 +968,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			LQDfInbMPkD/wIBTsGyoPScgcU1TFfBhwMh6WpMVPLA=
+			tRF2SutifmCnkbLna7moV+/XrgX59bFp7CNSEKfIZU4=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/PhotonUnityNetworking.Utilities.dll</key>
@@ -2003,14 +1983,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			rfRwzI7bovQtb58InFEQIzMr1t0zIz8TZbavbBbb40M=
+			3Yq8FbiNGa5yUg0m3ndQ5ou09H6ZekiqcbyeOnQsU4o=
 			</data>
 		</dict>
 		<key>Resources/Data/globalgamemanagers.assets</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+OUWcgsJdmaeKLKWOhHInAiQd7tCsjaNul1Pm1KI9F4=
+			dA8tZBeWcbbhaxw3mTasYAh+WFUoxH2J3P/5EvE+qXA=
 			</data>
 		</dict>
 		<key>Resources/Data/globalgamemanagers.assets.resS</key>
@@ -2024,7 +2004,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			0+dNs1mo+AsVeYhUdcTOviRFJonoBheLSu/dyEQAmmU=
+			ltsO8NhrMuwGhe1JlaOWD9ASTzHB6owSdI0NrMm9LPk=
 			</data>
 		</dict>
 		<key>Resources/Data/level0.resS</key>
@@ -2038,24 +2018,10 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			DiuAFALIYetU6Mj9mPo7CU698fIoIZpTbpRBU8xWBEw=
+			vxmSqEgLo/Fk4RyfFOQTx+Uu/QrgJBUV17dR/X+h1bk=
 			</data>
 		</dict>
 		<key>Resources/Data/level1.resS</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			x9/SU0nQ2DQ1R9vZi1GSHeGaL+aN2lBW8HAYBupme1g=
-			</data>
-		</dict>
-		<key>Resources/Data/level2</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			6DWsUcHm+Ft2iRrCsIHZRZ2aoJJ/vgAqxPFGvvFLjgo=
-			</data>
-		</dict>
-		<key>Resources/Data/level2.resS</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -2066,7 +2032,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			tuZLyPYny0JbF5fAs+blEXXhhpuQ/oRQz7VWzCNAj8g=
+			1/OSA7pLQV7X90sggCmj8zXqn9xJouUfdNK/gB3viZs=
 			</data>
 		</dict>
 		<key>Resources/Data/resources.assets.resS</key>
@@ -2087,7 +2053,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			dSiedtWEurKcWpMGGFXNon9jcmz2CATPA91p3igdwMQ=
+			BgxxtHkuu/8O0YniWuPU/EuUtrN1EmfsijrYK7V+bwI=
 			</data>
 		</dict>
 		<key>Resources/Data/sharedassets0.assets.resS</key>
@@ -2101,7 +2067,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Bs7SquPcZCbgnse8gMhgjBh4mZerwEt/3BCKjL68H6w=
+			WotmUkBRypcvlG1f17sGJ/Tm0tL6dBiwpTZScEsnxOM=
 			</data>
 		</dict>
 		<key>Resources/Data/sharedassets1.assets.resS</key>
@@ -2118,32 +2084,11 @@
 			rfMxIJvNexvyPVeFeqRgwqQNzjEmKptZBo5OZM5oV5s=
 			</data>
 		</dict>
-		<key>Resources/Data/sharedassets2.assets</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			wYlyQzEZ5N9L/gTxP8sS13dd4p9KktCqvM1igQMHLf4=
-			</data>
-		</dict>
-		<key>Resources/Data/sharedassets2.assets.resS</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			BAuxVYXTlnxRSzOejG2KKwmFTe+JnmQVRXBmoejfrqM=
-			</data>
-		</dict>
-		<key>Resources/Data/sharedassets2.resource</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			SzzQSB9eRnkJBTMwPxKl7JGkZBp1xtb1Tn01tVkSOJc=
-			</data>
-		</dict>
 		<key>Resources/DefaultPreferences.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			3tHJtvdHAvgSq7TYC8CFKP2EJuF4CKBM3gFbTTS0mPM=
+			W9oOJGpWGJUa6Ru37jQt0rSm6JGOOXZkQxPBaqSD0mI=
 			</data>
 		</dict>
 		<key>Resources/MainMenu.nib/designable.nib</key>

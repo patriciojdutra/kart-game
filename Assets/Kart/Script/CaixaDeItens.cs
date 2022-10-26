@@ -35,7 +35,6 @@ public class CaixaDeItens : MonoBehaviour
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<BoxCollider>().enabled = false;
         GetComponent<AudioSource>().Play();
-        Debug.Log(PhotonNetwork.LocalPlayer.NickName + " play som ");
 
         while (countdownValue > 0)
         {

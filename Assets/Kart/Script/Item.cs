@@ -28,7 +28,7 @@ public class Item : MonoBehaviourPun
     }
 
     private void OnCollisionEnter(Collision col)
-    {
+    {  
         Destroy();
     }
 
